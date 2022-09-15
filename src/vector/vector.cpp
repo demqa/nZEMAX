@@ -2,20 +2,14 @@
 
 vector_t vector_t::operator + (vector_t &vec)
 {
-    return {x_ + vec.x_, y_ + vec.y_};
+    vector_t new_vec(x_ + vec.x_, y_ + vec.y_);
+    return new_vec;
 }
 
 vector_t vector_t::operator - (vector_t &vec)
 {
-    return {x_ - vec.x_, y_ - vec.y_};
-}
-
-vector_t vector_t::operator -= (vector_t &vec)
-{
-    x_ -= vec.x_;
-    y_ -= vec.y_;
-    length_ = NAN;
-    return *this;
+    vector_t new_vec(x_ - vec.x_, y_ - vec.y_);
+    return new_vec;
 }
 
 vector_t vector_t::operator += (vector_t &vec)
@@ -26,20 +20,26 @@ vector_t vector_t::operator += (vector_t &vec)
     return *this;
 }
 
-vector_t vector_t::operator - ()
+vector_t vector_t::operator -= (vector_t &vec)
 {
-    x_ = - x_;
-    y_ = - y_;
+    x_ -= vec.x_;
+    y_ -= vec.y_;
     length_ = NAN;
     return *this;
 }
 
-vector_t vector_t::operator * (double multiplier)
+vector_t vector_t::operator *= (double multiplier)
 {
     x_ *= multiplier;
     y_ *= multiplier;
     length_ = NAN;
     return *this;
+}
+
+vector_t vector_t::operator - ()
+{
+    vector_t vec(-x_, -y_);
+    return vec;
 }
 
 double vector_t::length()

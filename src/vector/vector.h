@@ -27,8 +27,7 @@ public:
 
     vector_t operator += (vector_t &vec);
     vector_t operator -= (vector_t &vec);
+    vector_t operator *= (double multiplier);
 
     vector_t operator - ();
-
-    vector_t operator * (double multiplier);
 };
