@@ -14,7 +14,7 @@ public:
         length_(length())
     {}
 
-    vector_t(vector_t &vec):
+    vector_t(const vector_t &vec):
         vector_t(vec.x_, vec.y_)
     {}
 
@@ -24,6 +24,7 @@ public:
 
     vector_t operator + (vector_t &vec);
     vector_t operator - (vector_t &vec);
+    vector_t operator = (const vector_t &vec);
 
     vector_t operator += (vector_t &vec);
     vector_t operator -= (vector_t &vec);

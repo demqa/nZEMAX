@@ -12,6 +12,14 @@ vector_t vector_t::operator - (vector_t &vec)
     return new_vec;
 }
 
+vector_t vector_t::operator = (const vector_t &vec)
+{
+    x_ = vec.x_;
+    y_ = vec.y_;
+    length_ = NAN;
+    return *this;
+}
+
 vector_t vector_t::operator += (vector_t &vec)
 {
     x_ += vec.x_;
