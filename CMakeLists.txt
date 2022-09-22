@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(GraphicalLibrary VERSION 0.1 LANGUAGES CXX)
+project(nZEMAX VERSION 0.1 LANGUAGES CXX)
 
-add_executable( GraphicalLibrary
+add_executable( nZEMAX
     src/main.cpp
     src/vector/vector.cpp
 )
