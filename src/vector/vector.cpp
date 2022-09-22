@@ -2,13 +2,13 @@
 
 vector_t vector_t::operator + (vector_t &vec)
 {
-    vector_t new_vec(x_ + vec.x_, y_ + vec.y_);
+    vector_t new_vec(x_ + vec.x_, y_ + vec.y_, z_ + vec.z_);
     return new_vec;
 }
 
 vector_t vector_t::operator - (vector_t &vec)
 {
-    vector_t new_vec(x_ - vec.x_, y_ - vec.y_);
+    vector_t new_vec(x_ - vec.x_, y_ - vec.y_, z_ - vec.z_);
     return new_vec;
 }
 
@@ -16,6 +16,7 @@ vector_t vector_t::operator = (const vector_t &vec)
 {
     x_ = vec.x_;
     y_ = vec.y_;
+    z_ = vec.z_;
     length_ = NAN;
     return *this;
 }
@@ -24,6 +25,7 @@ vector_t vector_t::operator += (vector_t &vec)
 {
     x_ += vec.x_;
     y_ += vec.y_;
+    z_ += vec.z_;
     length_ = NAN;
     return *this;
 }
@@ -32,6 +34,7 @@ vector_t vector_t::operator -= (vector_t &vec)
 {
     x_ -= vec.x_;
     y_ -= vec.y_;
+    z_ -= vec.z_;
     length_ = NAN;
     return *this;
 }
@@ -40,14 +43,15 @@ vector_t vector_t::operator *= (double multiplier)
 {
     x_ *= multiplier;
     y_ *= multiplier;
+    z_ *= multiplier;
     length_ = NAN;
     return *this;
 }
 
 vector_t vector_t::operator - ()
 {
-    vector_t vec(-x_, -y_);
-    return vec;
+    vector_t new_vec(-x_, -y_, -z_);
+    return new_vec;
 }
 
 double vector_t::length()
@@ -66,4 +70,9 @@ double vector_t::x() const
 double vector_t::y() const
 {
     return y_;
+}
+
+double vector_t::z() const
+{
+    return z_;
 }
