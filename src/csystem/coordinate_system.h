@@ -6,29 +6,22 @@
 class CoordinateSystem
 {
     Vector origin_;
-    Vector e1_, e2_;
+    Vector e1_{1, 0, 0}, e2_{0, 1, 0}, e3_{0, 0, 1};
     sf::RenderWindow &window_;
 
 public:
+    const Vector& e1() const;
+    const Vector& e2() const;
+    const Vector& e3() const;
+
     CoordinateSystem(sf::RenderWindow &window):
         window_(window),
-        origin_(),
-        e1_(1, 0),
-        e2_(0, 1)
+        origin_()
     {}
 
     CoordinateSystem(sf::RenderWindow &window, Vector &origin):
         window_(window),
-        origin_(origin),
-        e1_(1, 0),
-        e2_(0, 1)
-    {}
-
-    CoordinateSystem(sf::RenderWindow &window, Vector &origin, Vector &e1, Vector &e2):
-        window_(window),
-        origin_(origin),
-        e1_(e1),
-        e2_(e2)
+        origin_(origin)
     {}
 
     void draw(const Vector &vec, const sf::Color &color = sf::Color::Red) const;

@@ -1,8 +1,22 @@
 #include "coordinate_system.h"
 
+const Vector& CoordinateSystem::e1() const
+{
+    return e1_;
+}
+
+const Vector& CoordinateSystem::e2() const
+{
+    return e2_;
+}
+
+const Vector& CoordinateSystem::e3() const
+{
+    return e3_;
+}
+
 void CoordinateSystem::draw(const Vector &vec, const sf::Color &color) const
 {
-
     sf::Vertex line[2];
 
     double x0 = origin_.x();
