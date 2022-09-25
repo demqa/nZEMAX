@@ -2,21 +2,21 @@
 
 #include <cmath>
 
-class vector_t
+class Vector
 {
     double x_, y_, z_;
     double length_ = NAN;
 
 public:
-    vector_t(double x = 0, double y = 0, double z = 0):
+    Vector(double x = 0, double y = 0, double z = 0):
         x_(x),
         y_(y),
         z_(z),
         length_(length())
     {}
 
-    vector_t(const vector_t &vec):
-        vector_t(vec.x_, vec.y_, vec.z_)
+    Vector(const Vector &vec):
+        Vector(vec.x_, vec.y_, vec.z_)
     {}
 
     double x() const;
@@ -24,17 +24,17 @@ public:
     double z() const;
     double length();
 
-    void set_x(double x);
-    void set_y(double y);
-    void set_z(double z);
+    void setX(double x);
+    void setY(double y);
+    void setZ(double z);
 
-    vector_t operator + (vector_t &vec);
-    vector_t operator - (vector_t &vec);
-    vector_t operator = (const vector_t &vec);
+    Vector operator + (Vector &vec);
+    Vector operator - (Vector &vec);
+    Vector operator = (const Vector &vec);
 
-    vector_t operator += (vector_t &vec);
-    vector_t operator -= (vector_t &vec);
-    vector_t operator *= (double multiplier);
+    Vector operator += (Vector &vec);
+    Vector operator -= (Vector &vec);
+    Vector operator *= (double multiplier);
 
-    vector_t operator - ();
+    Vector operator - ();
 };

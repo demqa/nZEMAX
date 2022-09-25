@@ -1,6 +1,6 @@
 #include "coordinate_system.h"
 
-void coordinate_system_t::draw(const vector_t &vec, const sf::Color &color) const
+void CoordinateSystem::draw(const Vector &vec, const sf::Color &color) const
 {
 
     sf::Vertex line[2];

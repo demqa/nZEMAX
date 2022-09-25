@@ -10,11 +10,11 @@ int main(int argc, char *argv[])
 
     const double omega = 0.01;
     const double radius = 100;
-    double t = 0, delta_t = 0.01;
+    double t = 0, deltaT = 0.01;
 
-    vector_t origin(200, 200);
-    vector_t pupa(100, 100);
-    coordinate_system_t cs{window, origin};
+    Vector origin(200, 200);
+    Vector pupa(100, 100);
+    CoordinateSystem cs{window, origin};
 
     while (window.isOpen())
     {
@@ -27,11 +27,11 @@ int main(int argc, char *argv[])
 
         window.clear();
 
-        pupa.set_x(radius * cos(omega * t));
-        pupa.set_y(radius * sin(omega * t));
+        pupa.setX(radius * cos(omega * t));
+        pupa.setY(radius * sin(omega * t));
         cs.draw(pupa);
 
-        t += delta_t;
+        t += deltaT;
 
         window.display();
    }

@@ -1,18 +1,18 @@
 #include "vector.h"
 
-vector_t vector_t::operator + (vector_t &vec)
+Vector Vector::operator + (Vector &vec)
 {
-    vector_t new_vec(x_ + vec.x_, y_ + vec.y_, z_ + vec.z_);
-    return new_vec;
+    Vector newVec(x_ + vec.x_, y_ + vec.y_, z_ + vec.z_);
+    return newVec;
 }
 
-vector_t vector_t::operator - (vector_t &vec)
+Vector Vector::operator - (Vector &vec)
 {
-    vector_t new_vec(x_ - vec.x_, y_ - vec.y_, z_ - vec.z_);
-    return new_vec;
+    Vector newVec(x_ - vec.x_, y_ - vec.y_, z_ - vec.z_);
+    return newVec;
 }
 
-vector_t vector_t::operator = (const vector_t &vec)
+Vector Vector::operator = (const Vector &vec)
 {
     x_ = vec.x_;
     y_ = vec.y_;
@@ -21,7 +21,7 @@ vector_t vector_t::operator = (const vector_t &vec)
     return *this;
 }
 
-vector_t vector_t::operator += (vector_t &vec)
+Vector Vector::operator += (Vector &vec)
 {
     x_ += vec.x_;
     y_ += vec.y_;
@@ -30,7 +30,7 @@ vector_t vector_t::operator += (vector_t &vec)
     return *this;
 }
 
-vector_t vector_t::operator -= (vector_t &vec)
+Vector Vector::operator -= (Vector &vec)
 {
     x_ -= vec.x_;
     y_ -= vec.y_;
@@ -39,7 +39,7 @@ vector_t vector_t::operator -= (vector_t &vec)
     return *this;
 }
 
-vector_t vector_t::operator *= (double multiplier)
+Vector Vector::operator *= (double multiplier)
 {
     x_ *= multiplier;
     y_ *= multiplier;
@@ -48,13 +48,13 @@ vector_t vector_t::operator *= (double multiplier)
     return *this;
 }
 
-vector_t vector_t::operator - ()
+Vector Vector::operator - ()
 {
-    vector_t new_vec(-x_, -y_, -z_);
-    return new_vec;
+    Vector newVec(-x_, -y_, -z_);
+    return newVec;
 }
 
-double vector_t::length()
+double Vector::length()
 {
     if (std::isnan(length_))
         length_ = sqrt(x_ * x_ + y_ * y_);
@@ -62,32 +62,32 @@ double vector_t::length()
     return length_;
 }
 
-double vector_t::x() const
+double Vector::x() const
 {
     return x_;
 }
 
-double vector_t::y() const
+double Vector::y() const
 {
     return y_;
 }
 
-double vector_t::z() const
+double Vector::z() const
 {
     return z_;
 }
 
-void vector_t::set_x(double x)
+void Vector::setX(double x)
 {
     x_ = x;
 }
 
-void vector_t::set_y(double y)
+void Vector::setY(double y)
 {
     y_ = y;
 }
 
-void vector_t::set_z(double z)
+void Vector::setZ(double z)
 {
     z_ = z;
 }
