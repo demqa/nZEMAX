@@ -12,5 +12,6 @@ public:
         radius_(radius)
     {}
 
-    bool contains(const Vector &vec) const;
+    bool contains(const Vector &point) const;
+    bool inside  (const Vector &point) const;
 };
