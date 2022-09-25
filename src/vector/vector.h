@@ -24,6 +24,10 @@ public:
     double z() const;
     double length();
 
+    void set_x(double x);
+    void set_y(double y);
+    void set_z(double z);
+
     vector_t operator + (vector_t &vec);
     vector_t operator - (vector_t &vec);
     vector_t operator = (const vector_t &vec);

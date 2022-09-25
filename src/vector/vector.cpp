@@ -76,3 +76,18 @@ double vector_t::z() const
 {
     return z_;
 }
+
+void vector_t::set_x(double x)
+{
+    x_ = x;
+}
+
+void vector_t::set_y(double y)
+{
+    y_ = y;
+}
+
+void vector_t::set_z(double z)
+{
+    z_ = z;
+}
