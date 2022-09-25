@@ -5,5 +5,6 @@ namespace nZemax
     enum Params {
         windowHeight = 600,
         windowWidth  = 600,
+        sphereRadius = 200,
     };
 };

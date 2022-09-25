@@ -2,6 +2,16 @@
 
 static const double eps = 1e-7;
 
+double Sphere::radius() const
+{
+    return radius_;
+}
+
+const Vector& Sphere::origin() const
+{
+    return origin_;
+}
+
 bool Sphere::contains(const Vector &p) const
 {
     double d_x = p.x() - origin_.x();

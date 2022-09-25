@@ -7,6 +7,9 @@ class Sphere
     double radius_;
 
 public:
+    double radius() const;
+    const Vector& origin() const;
+
     Sphere(double radius, const Vector &origin = Vector()):
         origin_(origin),
         radius_(radius)
