@@ -11,4 +11,6 @@ public:
         origin_(origin),
         radius_(radius)
     {}
+
+    bool contains(const Vector &vec) const;
 };
