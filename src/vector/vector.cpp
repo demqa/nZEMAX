@@ -21,7 +21,7 @@ Vector Vector::operator = (const Vector &vec)
     return *this;
 }
 
-Vector Vector::operator += (Vector &vec)
+Vector& Vector::operator += (Vector &vec)
 {
     x_ += vec.x_;
     y_ += vec.y_;
@@ -30,7 +30,7 @@ Vector Vector::operator += (Vector &vec)
     return *this;
 }
 
-Vector Vector::operator -= (Vector &vec)
+Vector& Vector::operator -= (Vector &vec)
 {
     x_ -= vec.x_;
     y_ -= vec.y_;
@@ -39,7 +39,7 @@ Vector Vector::operator -= (Vector &vec)
     return *this;
 }
 
-Vector Vector::operator *= (double multiplier)
+Vector& Vector::operator *= (double multiplier)
 {
     x_ *= multiplier;
     y_ *= multiplier;

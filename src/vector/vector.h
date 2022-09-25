@@ -32,9 +32,9 @@ public:
     Vector operator - (Vector &vec);
     Vector operator = (const Vector &vec);
 
-    Vector operator += (Vector &vec);
-    Vector operator -= (Vector &vec);
-    Vector operator *= (double multiplier);
+    Vector& operator += (Vector &vec);
+    Vector& operator -= (Vector &vec);
+    Vector& operator *= (double multiplier);
 
     Vector operator - ();
 };
