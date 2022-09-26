@@ -22,6 +22,11 @@ void drawPixels(sf::RenderWindow &window, const unsigned int *pixels)
     window.draw(sprite);
 }
 
+void print(const Vector &vec)
+{
+    std::cout << "(" << vec.x() << " " << vec.y() << " " << vec.z() << ")\n";
+}
+
 void rayCasting(const Vector &light, const Sphere &sphere, unsigned int *pixels) {
     for (size_t x = 0; x < nZemax::windowWidth; ++x)
     {
@@ -44,7 +49,15 @@ void rayCasting(const Vector &light, const Sphere &sphere, unsigned int *pixels)
 
                  double z = std::sqrt(r * r - dx * dx - dy * dy);
 
-                 unsigned int alpha = std::floor(0xFF * (z / r));
+                 Vector point(x, y, z);
+
+                 Vector normal  = sphere.normal(point);
+                 Vector toLight = light - point;
+
+                 double cos = normal.cos(toLight);
+                 if (cos < 0) cos = 0;
+
+                 unsigned int alpha = std::floor(0xFF * cos);
 
                  pixels[y * nZemax::windowWidth + x] = (alpha << 24) + color;
             }
@@ -66,7 +79,7 @@ int main()
         return EXIT_FAILURE;
     }
 
-    Vector light{0, 0, -300};
+    Vector light{400, 300, 600};
 
     while (window.isOpen())
     {

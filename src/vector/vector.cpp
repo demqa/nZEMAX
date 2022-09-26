@@ -1,12 +1,22 @@
 #include "vector.h"
 
-Vector Vector::operator + (Vector &vec)
+double Vector::cos(Vector &vec)
+{
+    return (vec * *this) / (vec.length() * length());
+}
+
+double Vector::operator * (const Vector &vec) const
+{
+    return vec.x_ * x_ + vec.y_ * y_ + vec.z_ * z_;
+}
+
+Vector Vector::operator + (const Vector &vec) const
 {
     Vector newVec(x_ + vec.x_, y_ + vec.y_, z_ + vec.z_);
     return newVec;
 }
 
-Vector Vector::operator - (Vector &vec)
+Vector Vector::operator - (const Vector &vec) const
 {
     Vector newVec(x_ - vec.x_, y_ - vec.y_, z_ - vec.z_);
     return newVec;
@@ -56,8 +66,8 @@ Vector Vector::operator - ()
 
 double Vector::length()
 {
-    if (std::isnan(length_))
-        length_ = sqrt(x_ * x_ + y_ * y_);
+    // idk what the hell, but isnan doesn't work.
+    length_ = std::sqrt(x_ * x_ + y_ * y_ + z_ * z_);
 
     return length_;
 }

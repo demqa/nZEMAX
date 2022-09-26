@@ -23,13 +23,15 @@ public:
     double y() const;
     double z() const;
     double length();
+    double cos(Vector &vec);
 
     void setX(double x);
     void setY(double y);
     void setZ(double z);
 
-    Vector operator + (Vector &vec);
-    Vector operator - (Vector &vec);
+    double operator * (const Vector &vec) const;
+    Vector operator + (const Vector &vec) const;
+    Vector operator - (const Vector &vec) const;
     Vector operator = (const Vector &vec);
 
     Vector& operator += (Vector &vec);
