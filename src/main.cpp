@@ -41,7 +41,7 @@ void rayCasting(const Vector &light, const Sphere &sphere, unsigned int *pixels)
         for (size_t y = 0; y < nZemax::windowHeight; ++y) {
             if (sphere.inside(Vector(x, y)))
             {
-                 unsigned int color = 0xFFFFFF;
+                 unsigned int color = 0xe16941;
 
                  double r  = sphere.radius();
                  double dx = sphere.origin().x() - x;
@@ -79,7 +79,7 @@ int main()
         return EXIT_FAILURE;
     }
 
-    Vector light{400, 300, 600};
+    Vector light{400, 100, 600};
 
     while (window.isOpen())
     {
