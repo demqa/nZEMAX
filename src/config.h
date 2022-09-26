@@ -7,4 +7,8 @@ namespace nZemax
         windowWidth  = 600,
         sphereRadius = 200,
     };
+
+    enum Colors {
+        royalBlue = 0xe16941,
+    };
 };

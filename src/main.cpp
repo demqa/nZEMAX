@@ -27,6 +27,13 @@ void print(const Vector &vec)
     std::cout << "(" << vec.x() << " " << vec.y() << " " << vec.z() << ")\n";
 }
 
+double clamp(double intensity)
+{
+    if (intensity > 1) return 1;
+    if (intensity < 0) return 0;
+    return intensity;
+}
+
 void rayCasting(const Vector &light, const Sphere &sphere, unsigned int *pixels) {
     for (size_t x = 0; x < nZemax::windowWidth; ++x)
     {
@@ -41,7 +48,7 @@ void rayCasting(const Vector &light, const Sphere &sphere, unsigned int *pixels)
         for (size_t y = 0; y < nZemax::windowHeight; ++y) {
             if (sphere.inside(Vector(x, y)))
             {
-                 unsigned int color = 0xe16941;
+                 unsigned int sphereColor = nZemax::royalBlue;
 
                  double r  = sphere.radius();
                  double dx = sphere.origin().x() - x;
@@ -55,11 +62,15 @@ void rayCasting(const Vector &light, const Sphere &sphere, unsigned int *pixels)
                  Vector toLight = light - point;
 
                  double cos = normal.cos(toLight);
-                 if (cos < 0) cos = 0;
+                 double diffuse  = clamp(cos);
+                 double ambient  = clamp(1);
+                 // double specular = 0;
 
-                 unsigned int alpha = std::floor(0xFF * cos);
+                 double intensity = clamp(diffuse * 0.9 + ambient * 0.1);
 
-                 pixels[y * nZemax::windowWidth + x] = (alpha << 24) + color;
+                 unsigned int alpha = std::floor(0xFF * intensity);
+
+                 pixels[y * nZemax::windowWidth + x] = (alpha << 24) + sphereColor;
             }
         }
     }
@@ -71,7 +82,7 @@ int main()
 
     Vector origin{nZemax::windowWidth / 2.f, nZemax::windowHeight / 2.f};
     CoordinateSystem cs{window, origin};
-    Sphere sphere{nZemax::sphereRadius, origin};
+    Sphere sphere{nZemax::sphereRadius, origin + Vector(100)};
 
     unsigned int *pixels = (unsigned int *) calloc(nZemax::windowWidth * nZemax::windowHeight, 4);
     if (pixels == nullptr) {
@@ -79,7 +90,7 @@ int main()
         return EXIT_FAILURE;
     }
 
-    Vector light{400, 100, 600};
+    Vector light{100, 100, 300};
 
     while (window.isOpen())
     {
