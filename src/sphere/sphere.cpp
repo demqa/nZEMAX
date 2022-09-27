@@ -1,4 +1,6 @@
 #include "sphere.h"
+#include <cmath>
+
 #include <cassert>
 
 static const double eps = 1e-7;
@@ -15,18 +17,18 @@ const Vector& Sphere::origin() const
 
 bool Sphere::contains(const Vector &p) const
 {
-    double d_x = p.x() - origin_.x();
-    double d_y = p.y() - origin_.y();
-    double d_z = p.z() - origin_.z();
+    double d_x = p.getX() - origin_.getX();
+    double d_y = p.getY() - origin_.getY();
+    double d_z = p.getZ() - origin_.getZ();
 
     return std::abs(d_x * d_x + d_y * d_y + d_z * d_z - radius_ * radius_) < eps;
 }
 
 bool Sphere::inside(const Vector &p) const
 {
-    double d_x = p.x() - origin_.x();
-    double d_y = p.y() - origin_.y();
-    double d_z = p.z() - origin_.z();
+    double d_x = p.getX() - origin_.getX();
+    double d_y = p.getY() - origin_.getY();
+    double d_z = p.getZ() - origin_.getZ();
 
     return d_x * d_x + d_y * d_y + d_z * d_z < radius_ * radius_;
 }

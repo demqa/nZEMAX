@@ -1,12 +1,14 @@
 #include "csystem/coordinate_system.h"
 #include "vector/vector.h"
 #include "sphere/sphere.h"
+#include "color/color.h"
 #include "config.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <cmath>
 #include <iostream>
 
 void drawPixels(sf::RenderWindow &window, const unsigned int *pixels)
@@ -24,7 +26,7 @@ void drawPixels(sf::RenderWindow &window, const unsigned int *pixels)
 
 void print(const Vector &vec)
 {
-    std::cout << "(" << vec.x() << " " << vec.y() << " " << vec.z() << ")\n";
+    std::cout << "(" << vec.getX() << " " << vec.getY() << " " << vec.getZ() << ")\n";
 }
 
 double clamp(double intensity)
@@ -34,12 +36,15 @@ double clamp(double intensity)
     return intensity;
 }
 
-void rayCasting(const Vector &light, const Sphere &sphere, unsigned int *pixels) {
+void rayCasting(const Vector& light, const Color& lightColor, const Sphere& sphere, unsigned int* pixels) {
+    Color sphereColor(nZemax::cherry);
+    unsigned int sphereColorNum(nZemax::cherry);
+
     for (size_t x = 0; x < nZemax::windowWidth; ++x)
     {
         for (size_t y = 0; y < nZemax::windowHeight; ++y) {
             //                                      A B G R
-            pixels[y * nZemax::windowWidth + x] = 0x80808080;
+            pixels[y * nZemax::windowWidth + x] = 0xFF808080;
         }
     }
 
@@ -48,11 +53,9 @@ void rayCasting(const Vector &light, const Sphere &sphere, unsigned int *pixels)
         for (size_t y = 0; y < nZemax::windowHeight; ++y) {
             if (sphere.inside(Vector(x, y)))
             {
-                 unsigned int sphereColor = nZemax::royalBlue;
-
                  double r  = sphere.radius();
-                 double dx = sphere.origin().x() - x;
-                 double dy = sphere.origin().y() - y;
+                 double dx = sphere.origin().getX() - x;
+                 double dy = sphere.origin().getY() - y;
 
                  double z = std::sqrt(r * r - dx * dx - dy * dy);
 
@@ -62,15 +65,17 @@ void rayCasting(const Vector &light, const Sphere &sphere, unsigned int *pixels)
                  Vector toLight = light - point;
 
                  double cos = normal.cos(toLight);
-                 double diffuse  = clamp(cos);
-                 double ambient  = clamp(1);
-                 // double specular = 0;
 
-                 double intensity = clamp(diffuse * 0.9 + ambient * 0.1);
+                 // double diffuse  = 0;
+                 double diffuse  = clamp(cos);
+                 double ambient  = 0.2;
+                 double specular = 0;
+
+                 double intensity = clamp(diffuse + ambient + specular);
 
                  unsigned int alpha = std::floor(0xFF * intensity);
 
-                 pixels[y * nZemax::windowWidth + x] = (alpha << 24) + sphereColor;
+                 pixels[y * nZemax::windowWidth + x] = (alpha << 24) + sphereColorNum;
             }
         }
     }
@@ -82,7 +87,7 @@ int main()
 
     Vector origin{nZemax::windowWidth / 2.f, nZemax::windowHeight / 2.f};
     CoordinateSystem cs{window, origin};
-    Sphere sphere{nZemax::sphereRadius, origin + Vector(100)};
+    Sphere sphere{nZemax::sphereRadius, origin};
 
     unsigned int *pixels = (unsigned int *) calloc(nZemax::windowWidth * nZemax::windowHeight, 4);
     if (pixels == nullptr) {
@@ -91,6 +96,7 @@ int main()
     }
 
     Vector light{100, 100, 300};
+    Color lightColor(nZemax::royalBlue);
 
     while (window.isOpen())
     {
@@ -103,7 +109,7 @@ int main()
 
         window.clear();
 
-        rayCasting(light, sphere, pixels);
+        rayCasting(light, lightColor, sphere, pixels);
         drawPixels(window, pixels);
 
         window.display();

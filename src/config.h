@@ -8,7 +8,8 @@ namespace nZemax
         sphereRadius = 200,
     };
 
-    enum Colors {
-        royalBlue = 0xe16941,
+    enum Colors: unsigned int {
+        royalBlue = 0xE16941,
+        cherry    = 0x2D04D2,
     };
 };

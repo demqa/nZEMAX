@@ -1,42 +1,40 @@
 #pragma once
 
-#include <cmath>
-
 class Vector
 {
+protected:
     double x_, y_, z_;
-    double length_ = NAN;
 
 public:
     Vector(double x = 0, double y = 0, double z = 0):
         x_(x),
         y_(y),
-        z_(z),
-        length_(length())
+        z_(z)
     {}
 
-    Vector(const Vector &vec):
-        Vector(vec.x_, vec.y_, vec.z_)
-    {}
+    // kernel getters
+    double getX() const;
+    double getY() const;
+    double getZ() const;
 
-    double x() const;
-    double y() const;
-    double z() const;
-    double length();
-    double cos(Vector &vec);
-
+    // kernel setters
     void setX(double x);
     void setY(double y);
     void setZ(double z);
 
-    double operator * (const Vector &vec) const;
-    Vector operator + (const Vector &vec) const;
-    Vector operator - (const Vector &vec) const;
-    Vector operator = (const Vector &vec);
-
-    Vector& operator += (Vector &vec);
-    Vector& operator -= (Vector &vec);
+    // kernel operators
+    Vector& operator += (const Vector &vec);
+    Vector& operator -= (const Vector &vec);
     Vector& operator *= (double multiplier);
 
     Vector operator - ();
+
+    // make if interface functions
+    double length() const;
+    double cos(const Vector &vec) const;
+
+    // make it interface operators
+    double operator * (const Vector &vec) const; // scalar product
+    Vector operator + (const Vector &vec) const;
+    Vector operator - (const Vector &vec) const;
 };

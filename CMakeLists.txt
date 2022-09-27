@@ -7,6 +7,7 @@ add_executable( nZEMAX
     src/vector/vector.cpp
     src/csystem/coordinate_system.cpp
     src/sphere/sphere.cpp
+    src/color/color.cpp
 )
 
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED)

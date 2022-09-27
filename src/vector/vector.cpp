@@ -1,103 +1,101 @@
 #include "vector.h"
+#include <cmath>
 
-double Vector::cos(Vector &vec)
-{
-    return (vec * *this) / (vec.length() * length());
-}
-
-double Vector::operator * (const Vector &vec) const
-{
-    return vec.x_ * x_ + vec.y_ * y_ + vec.z_ * z_;
-}
-
-Vector Vector::operator + (const Vector &vec) const
-{
-    Vector newVec(x_ + vec.x_, y_ + vec.y_, z_ + vec.z_);
-    return newVec;
-}
-
-Vector Vector::operator - (const Vector &vec) const
-{
-    Vector newVec(x_ - vec.x_, y_ - vec.y_, z_ - vec.z_);
-    return newVec;
-}
-
-Vector Vector::operator = (const Vector &vec)
-{
-    x_ = vec.x_;
-    y_ = vec.y_;
-    z_ = vec.z_;
-    length_ = NAN;
-    return *this;
-}
-
-Vector& Vector::operator += (Vector &vec)
+// kernel
+Vector& Vector::operator += (const Vector &vec)
 {
     x_ += vec.x_;
     y_ += vec.y_;
     z_ += vec.z_;
-    length_ = NAN;
     return *this;
 }
 
-Vector& Vector::operator -= (Vector &vec)
+// kernel
+Vector& Vector::operator -= (const Vector &vec)
 {
     x_ -= vec.x_;
     y_ -= vec.y_;
     z_ -= vec.z_;
-    length_ = NAN;
     return *this;
 }
 
+// kernel
 Vector& Vector::operator *= (double multiplier)
 {
     x_ *= multiplier;
     y_ *= multiplier;
     z_ *= multiplier;
-    length_ = NAN;
     return *this;
 }
 
+// kernel
 Vector Vector::operator - ()
 {
-    Vector newVec(-x_, -y_, -z_);
-    return newVec;
+    return Vector(-x_, -y_, -z_);
 }
 
-double Vector::length()
-{
-    // idk what the hell, but isnan doesn't work.
-    length_ = std::sqrt(x_ * x_ + y_ * y_ + z_ * z_);
-
-    return length_;
-}
-
-double Vector::x() const
+// kernel
+double Vector::getX() const
 {
     return x_;
 }
 
-double Vector::y() const
+// kernel
+double Vector::getY() const
 {
     return y_;
 }
 
-double Vector::z() const
+// kernel
+double Vector::getZ() const
 {
     return z_;
 }
 
+// kernel
 void Vector::setX(double x)
 {
     x_ = x;
 }
 
+// kernel
 void Vector::setY(double y)
 {
     y_ = y;
 }
 
+// kernel
 void Vector::setZ(double z)
 {
     z_ = z;
+}
+
+// interface
+double Vector::length() const
+{
+    return std::sqrt(x_ * x_ + y_ * y_ + z_ * z_);
+}
+
+// interface
+double Vector::cos(const Vector &vec) const
+{
+    return (vec * *this) / (vec.length() * length());
+}
+
+// interface
+double Vector::operator * (const Vector &vec) const
+{
+    return vec.x_ * x_ + vec.y_ * y_ + vec.z_ * z_;
+}
+
+// interface
+Vector Vector::operator + (const Vector &vec) const
+{
+    return Vector(x_ + vec.x_, y_ + vec.y_, z_ + vec.z_);
+}
+
+// interface
+Vector Vector::operator - (const Vector &vec) const
+{
+    return Vector(x_ - vec.x_, y_ - vec.y_, z_ - vec.z_);
 }
