@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../vector/vector.h"
+#include "vector.h"
 
 class Color: Vector {
 public:

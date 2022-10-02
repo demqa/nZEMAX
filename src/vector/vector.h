@@ -2,7 +2,7 @@
 
 class Vector
 {
-protected:
+private:
     double x_, y_, z_;
 
 public:

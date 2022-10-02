@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../vector/vector.h"
 #include <SFML/Graphics.hpp>
+#include "vector.h"
 
 class CoordinateSystem
 {

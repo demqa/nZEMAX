@@ -17,8 +17,8 @@ static double clamp(double color)
 
 Color& Color::clamp()
 {
-    x_ = ::clamp(x_);
-    y_ = ::clamp(y_);
-    z_ = ::clamp(z_);
+    setX(::clamp(getX()));
+    setY(::clamp(getY()));
+    setZ(::clamp(getZ()));
     return *this;
 }

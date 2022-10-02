@@ -1,15 +1,14 @@
-#include "csystem/coordinate_system.h"
-#include "vector/vector.h"
-#include "sphere/sphere.h"
-#include "color/color.h"
-#include "config.h"
+#include <cmath>
+#include <iostream>
 
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
-#include <cmath>
-#include <iostream>
+#include "coordinate_system.h"
+#include "vector.h"
+#include "sphere.h"
+#include "color.h"
+#include "config.h"
 
 void drawPixels(sf::RenderWindow &window, const unsigned int *pixels)
 {
@@ -69,6 +68,7 @@ void rayCasting(const Vector& light, const Color& lightColor, const Sphere& sphe
                  // double diffuse  = 0;
                  double diffuse  = clamp(cos);
                  double ambient  = 0.2;
+                 // TODO: specular component
                  double specular = 0;
 
                  double intensity = clamp(diffuse + ambient + specular);
