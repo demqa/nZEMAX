@@ -7,6 +7,7 @@ set(SOURCES_DIRS
     src/csystem
     src/sphere
     src/color
+    src
 )
 
 set(SOURCES

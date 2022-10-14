@@ -8,8 +8,18 @@ namespace nZemax
         sphereRadius = 200,
     };
 
-    enum Colors: unsigned int {
-        royalBlue = 0xE16941,
-        cherry    = 0x2D04D2,
-    };
+    // hex colors in RGB format.
+    // lowest byte is Blue
+    enum class Colors: unsigned int {
+        royalBlue = 0x4169E1,
+        cherry    = 0xD2042D,
+
+        red       = 0xFF0000,
+        green     = 0x00FF00,
+        blue      = 0x0000FF,
+
+        white     = 0xFFFFFF,
+        grey      = 0x808080,
+        black     = 0x000000,
+   };
 };

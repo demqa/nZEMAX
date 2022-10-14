@@ -15,6 +15,11 @@ const Vector& Sphere::origin() const
     return origin_;
 }
 
+const Color& Sphere::color() const
+{
+    return color_;
+}
+
 bool Sphere::contains(const Vector &p) const
 {
     double d_x = p.getX() - origin_.getX();

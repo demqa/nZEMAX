@@ -3,12 +3,14 @@
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+#include <ostream>
+#include <type_traits>
 
+#include "config.h"
 #include "coordinate_system.h"
 #include "vector.h"
 #include "sphere.h"
 #include "color.h"
-#include "config.h"
 
 void drawPixels(sf::RenderWindow &window, const unsigned int *pixels)
 {
@@ -28,22 +30,24 @@ void print(const Vector &vec)
     std::cout << "(" << vec.getX() << " " << vec.getY() << " " << vec.getZ() << ")\n";
 }
 
-double clamp(double intensity)
-{
-    if (intensity > 1) return 1;
-    if (intensity < 0) return 0;
-    return intensity;
-}
+// std::ostream& operator<<(std::ostream &os, const Color& vec) {
+//     return os << "(" << vec.() << " " << vec.getY() << " " << vec.getZ() << ")\n";
+// }
+
+// double clamp(double intensity)
+// {
+//     if (intensity > 1) return 1;
+//     if (intensity < 0) return 0;
+//     return intensity;
+// }
 
 void rayCasting(const Vector& light, const Color& lightColor, const Sphere& sphere, unsigned int* pixels) {
-    Color sphereColor(nZemax::cherry);
-    unsigned int sphereColorNum(nZemax::cherry);
-
     for (size_t x = 0; x < nZemax::windowWidth; ++x)
     {
         for (size_t y = 0; y < nZemax::windowHeight; ++y) {
-            //                                      A B G R
-            pixels[y * nZemax::windowWidth + x] = 0xFF808080;
+            // TODO: make this convertion member of color class
+            //                                      order: A B G R
+            pixels[y * nZemax::windowWidth + x] = (0xFFu << 24) + (unsigned int) nZemax::Colors::grey;
         }
     }
 
@@ -73,9 +77,10 @@ void rayCasting(const Vector& light, const Color& lightColor, const Sphere& sphe
 
                  double intensity = clamp(diffuse + ambient + specular);
 
-                 unsigned int alpha = std::floor(0xFF * intensity);
+                 auto color = sphere.color() * lightColor;
+                 color *= intensity;
 
-                 pixels[y * nZemax::windowWidth + x] = (alpha << 24) + sphereColorNum;
+                 pixels[y * nZemax::windowWidth + x] = color.RGBAcolor();
             }
         }
     }
@@ -86,8 +91,8 @@ int main()
     sf::RenderWindow window(sf::VideoMode(nZemax::windowWidth, nZemax::windowHeight), "This will be something incredible... one day...");
 
     Vector origin{nZemax::windowWidth / 2.f, nZemax::windowHeight / 2.f};
-    CoordinateSystem cs{window, origin};
-    Sphere sphere{nZemax::sphereRadius, origin};
+    // CoordinateSystem cs{window, origin};
+    Sphere sphere{nZemax::sphereRadius, Color(nZemax::Colors::cherry), origin};
 
     unsigned int *pixels = (unsigned int *) calloc(nZemax::windowWidth * nZemax::windowHeight, 4);
     if (pixels == nullptr) {
@@ -95,8 +100,9 @@ int main()
         return EXIT_FAILURE;
     }
 
+    // TODO: make it another class Light.
     Vector light{100, 100, 300};
-    Color lightColor(nZemax::royalBlue);
+    Color lightColor(nZemax::Colors::white);
 
     while (window.isOpen())
     {
