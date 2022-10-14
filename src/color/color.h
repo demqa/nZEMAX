@@ -3,7 +3,7 @@
 #include "config.h"
 #include "vector.h"
 
-// TODO: remove this debug header
+// TODO: remove
 #include <iostream>
 
 class Color: Vector {
@@ -17,37 +17,33 @@ public:
         clamp();
     };
 
-    Color(nZemax::Colors RGBcolor, double alpha = 1):
-        Vector(
-            Vector(
-                 ((unsigned int) RGBcolor        & 0xFF) / double(0xFF),
-                (((unsigned int) RGBcolor >> 8)  & 0xFF) / double(0xFF),
-                (((unsigned int) RGBcolor >> 16) & 0xFF) / double(0xFF)
-            )
-        ),
-        alpha_(alpha)
-    {
-        std::cout << "Color initialized: (" << getX() << ", " << getY() << ", " << getZ() << "); alpha = " << alpha << "\n";
-    }
-
     // TODO: remove it
     void dump() const {
         std::cout << "Color dump: (" << getX() << ", " << getY() << ", " << getZ() << "); alpha = " << alpha_ << "\n";
     }
+
+    Color(nZemax::Colors RGBcolor, double alpha = 1):
+        Vector(
+            Vector(
+                (((unsigned int) RGBcolor >>  0) & 0xFF) / double(0xFF),
+                (((unsigned int) RGBcolor >>  8) & 0xFF) / double(0xFF),
+                (((unsigned int) RGBcolor >> 16) & 0xFF) / double(0xFF)
+            )
+        ),
+        alpha_(alpha)
+    {}
 
     unsigned int RGBAcolor() const;
 
     Color& setAlpha(double alpha);
     Color& clamp();
 
+    Color& operator *= (const Color& color);
+    Color& operator += (const Color& color);
+    Color& operator *= (double multiplier);
+
     Color  operator * (const Color& color) const;
-    Color& operator *= (double multiplier)
-    {
-        setX(getX() * multiplier);
-        setY(getY() * multiplier);
-        setZ(getZ() * multiplier);
-        return *this;
-    };
+    Color  operator * (double multiplier) const;
 };
 
 double clamp(double color);

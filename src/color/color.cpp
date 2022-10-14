@@ -1,12 +1,40 @@
 #include "color.h"
 #include <cmath>
 
+Color& Color::operator *= (const Color &color)
+{
+    setX(color.getX() * getX());
+    setY(color.getY() * getY());
+    setZ(color.getZ() * getZ());
+    return *this;
+}
+
+Color& Color::operator += (const Color &color)
+{
+    setX(color.getX() + getX());
+    setY(color.getY() + getY());
+    setZ(color.getZ() + getZ());
+    return *this;
+}
+
+Color& Color::operator *= (double multiplier)
+{
+    setX(getX() * multiplier);
+    setY(getY() * multiplier);
+    setZ(getZ() * multiplier);
+    return *this;
+};
+
 Color Color::operator * (const Color &color) const
 {
-    double R = color.getX() * getX();
-    double G = color.getY() * getY();
-    double B = color.getZ() * getZ();
-    return Color(R, G, B);
+    Color result{*this};
+    return result *= color;
+}
+
+Color Color::operator * (double multiplier) const
+{
+    Color result{*this};
+    return result *= multiplier;
 }
 
 double clamp(double color)

@@ -33,6 +33,7 @@ public:
     double length() const;
     double cos(const Vector &vec) const;
 
+    Vector operator * (double multiplier) const;
     // make it interface operators
     double operator * (const Vector &vec) const; // scalar product
     Vector operator + (const Vector &vec) const;

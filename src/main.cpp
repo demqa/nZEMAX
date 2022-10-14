@@ -1,10 +1,10 @@
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-#include <ostream>
-#include <type_traits>
+#include <new>
 
 #include "config.h"
 #include "coordinate_system.h"
@@ -25,21 +25,9 @@ void drawPixels(sf::RenderWindow &window, const unsigned int *pixels)
     window.draw(sprite);
 }
 
-void print(const Vector &vec)
-{
-    std::cout << "(" << vec.getX() << " " << vec.getY() << " " << vec.getZ() << ")\n";
+std::ostream& operator<<(std::ostream &os, const Vector& vec) {
+    return os << "(" << vec.getX() << " " << vec.getY() << " " << vec.getZ() << ")\n";
 }
-
-// std::ostream& operator<<(std::ostream &os, const Color& vec) {
-//     return os << "(" << vec.() << " " << vec.getY() << " " << vec.getZ() << ")\n";
-// }
-
-// double clamp(double intensity)
-// {
-//     if (intensity > 1) return 1;
-//     if (intensity < 0) return 0;
-//     return intensity;
-// }
 
 void rayCasting(const Vector& light, const Color& lightColor, const Sphere& sphere, unsigned int* pixels) {
     for (size_t x = 0; x < nZemax::windowWidth; ++x)
@@ -47,6 +35,7 @@ void rayCasting(const Vector& light, const Color& lightColor, const Sphere& sphe
         for (size_t y = 0; y < nZemax::windowHeight; ++y) {
             // TODO: make this convertion member of color class
             //                                      order: A B G R
+            //  HAHA I use that grey RGB == BGR HAHHAHAHHAHA
             pixels[y * nZemax::windowWidth + x] = (0xFFu << 24) + (unsigned int) nZemax::Colors::grey;
         }
     }
@@ -69,16 +58,22 @@ void rayCasting(const Vector& light, const Color& lightColor, const Sphere& sphe
 
                  double cos = normal.cos(toLight);
 
-                 // double diffuse  = 0;
+                 Vector reflected = (normal * 2 * cos) - toLight;
+
+                 double reflCos  = normal.cos(reflected);
+
                  double diffuse  = clamp(cos);
                  double ambient  = 0.2;
-                 // TODO: specular component
-                 double specular = 0;
+                 double specular = std::pow(clamp(reflCos), 25);
 
-                 double intensity = clamp(diffuse + ambient + specular);
+                 Color spec = Color(lightColor) * specular;
 
-                 auto color = sphere.color() * lightColor;
-                 color *= intensity;
+                 Color color = sphere.color() * lightColor;
+                 color *= (diffuse + ambient);
+
+                 color += spec;
+
+                 color.clamp();
 
                  pixels[y * nZemax::windowWidth + x] = color.RGBAcolor();
             }
@@ -94,11 +89,19 @@ int main()
     // CoordinateSystem cs{window, origin};
     Sphere sphere{nZemax::sphereRadius, Color(nZemax::Colors::cherry), origin};
 
-    unsigned int *pixels = (unsigned int *) calloc(nZemax::windowWidth * nZemax::windowHeight, 4);
-    if (pixels == nullptr) {
-        fprintf(stderr, "nZemax: cannot allocate enough memory.\n");
-        return EXIT_FAILURE;
-    }
+    unsigned int pixels[nZemax::windowWidth * nZemax::windowHeight];
+
+    // TODO: maybe one day it will be nice to allocate it in heap.
+    // unsigned int *pixels = nullptr;
+    // try {
+    //     pixels = new unsigned int [nZemax::windowWidth * nZemax::windowHeight];
+    // }
+    // catch (std::bad_alloc) {
+    //     fprintf(stderr, "nZemax: cannot allocate enough memory.\n");
+    //     return EXIT_FAILURE;
+    // }
+    //
+    // delete [] pixels;
 
     // TODO: make it another class Light.
     Vector light{100, 100, 300};
@@ -119,7 +122,7 @@ int main()
         drawPixels(window, pixels);
 
         window.display();
-   }
+    }
 
     return 0;
 }

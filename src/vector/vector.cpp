@@ -89,13 +89,22 @@ double Vector::operator * (const Vector &vec) const
 }
 
 // interface
+Vector Vector::operator * (double multiplier) const
+{
+    Vector result{*this};
+    return result *= multiplier;
+}
+
+// interface
 Vector Vector::operator + (const Vector &vec) const
 {
-    return Vector(x_ + vec.x_, y_ + vec.y_, z_ + vec.z_);
+    Vector result{*this};
+    return result += vec;
 }
 
 // interface
 Vector Vector::operator - (const Vector &vec) const
 {
-    return Vector(x_ - vec.x_, y_ - vec.y_, z_ - vec.z_);
+    Vector result{*this};
+    return result -= vec;
 }

@@ -27,5 +27,5 @@ find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 target_include_directories(nZEMAX PRIVATE ${SOURCES_DIRS})
 target_link_libraries(nZEMAX sfml-graphics)
 
-# set(${CMAKE_CXX_FLAGS} -O2 -fsanitize=address -g3)
-set(${CMAKE_CXX_FLAGS} -O2)
+set(${CMAKE_CXX_FLAGS} -O2 -fsanitize=address -g3)
+# set(${CMAKE_CXX_FLAGS} -O2)
